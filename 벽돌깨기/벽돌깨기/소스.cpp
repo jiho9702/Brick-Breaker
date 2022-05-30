@@ -19,6 +19,7 @@ using namespace std;
 
 int		left_ = 0;
 int		bottom = 0;
+int		item_count = 0;
 
 int		collision_count = 0;
 
@@ -51,7 +52,7 @@ public:
 	}
 };
 
-Point moving_ball, velocity, rectangle[4], bar_point, bottom_point, gameover_point, start_point, item[3];
+Point moving_ball, velocity, rectangle[4], bar_point, bottom_point, gameover_point, start_point;
 
 // 벽돌의 위치를 저장하는 class
 class BRICKS {
@@ -89,12 +90,14 @@ public:
 
 START_SCREEN start_screen;
 
-//class ITEM {
-//public:
-//	Point rectangle[1];
-//};
-//
-//ITEM item;
+class ITEM {
+public:
+	Point item[3];
+	Point item_in_block[3];
+	bool correct[3] = { false };
+};
+
+ITEM item;
 
 int w, h;
 
@@ -163,8 +166,11 @@ void item_init() {
 	for (int i = 0; i < 3; i++) {
 		x = rand() % 7;
 		y = rand() % 10;
-		item[i].x = ((block_array[x][y].rectangle[0].x + block_array[x][y].rectangle[3].x) / 2);
-		item[i].y = ((block_array[x][y].rectangle[0].y + block_array[x][y].rectangle[1].y) / 2);
+		item.item[i].x = ((block_array[x][y].rectangle[0].x + block_array[x][y].rectangle[3].x) / 2);
+		item.item[i].y = ((block_array[x][y].rectangle[0].y + block_array[x][y].rectangle[1].y) / 2);
+
+		item.item_in_block[i].x = x;
+		item.item_in_block[i].y = y;
 	}
 }
 
@@ -200,8 +206,8 @@ void init(void) {
 	moving_ball.x = width / 2;
 	moving_ball.y = 590;
 
-	velocity.x = 0.05;
-	velocity.y = 0.05;
+	velocity.x = 0.1;
+	velocity.y = 0.1;
 
 	collision_count = 1;
 
@@ -270,16 +276,47 @@ void	Modeling_brick() {
 
 }
 
+void item_gotcha() {
+	for (int i = 0; i < 3; i++) {
+		if (bar.rectangle[0].x <= item.item[i].x
+			&& bar.rectangle[3].x >= item.item[i].x
+				&& bar.rectangle[3].y >= item.item[i].y ){
+
+				item.item[i].x = -100;
+				item.item[i].y = -100;
+
+				item_count++;
+		}
+	}
+}
+
 
 void Falling_item() {
 
+	int store = 0;
+	int store_x = -1, store_y = -1;
+
 	for (int i = 0; i < 3; i++) {
-		Modeling_Circle(10.0, item[i]);
+		if (item.correct[i] == true) {
+			Modeling_Circle(10.0, item.item[i]);
+			item.item[i].y -= 0.01;
+			if (item.item[i].y <= bar.rectangle[1].y) {
+				item.correct[i] = -1;
+			}
+			item_gotcha();
+		}
 	}
+	for (int i = 0; i < 3; i++) {
+		store_x = item.item_in_block[i].x;
+		store_y = item.item_in_block[i].y;
 
+		if (block_array[store_x][store_y].rectangle[0].x == 0) {
+			if (item.correct[i] == false) {
+				item.correct[i] = true;
+			}
+		}
 
-	glEnd();
-
+	}
 }
 
 float distance(Point a, Point b) {
@@ -624,7 +661,7 @@ void RenderScene(void) {
 
 		Collision_Detection_Between_bar();
 
-		detection_bottom_failed();
+		//detection_bottom_failed();
 
 		// 움직이는 공의 위치 변화 
 		moving_ball.x += velocity.x;
@@ -667,6 +704,22 @@ void RenderScene(void) {
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, bitmap);
 
 			free(bitmap);
+			if (item_count != 3) {
+				glColor3f(1.0, 1, 1);
+				drawBox();
+				GLuint texID;
+
+				unsigned char* bitmap;
+				bitmap = LoadMeshFromFile((char*)"gameover_failed.png");
+				glEnable(GL_TEXTURE_2D);
+				glGenTextures(1, &texID);
+				glBindTexture(GL_TEXTURE_2D, texID);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, bitmap);
+
+				free(bitmap);
+			}
 		}
 
 	}
@@ -730,6 +783,9 @@ void MyKey(int key, int x, int y) {
 		intro_init();
 		drawBox();
 		count_ = 0;
+		for (int i = 0; i < 3; i++) {
+			item.correct[i] = false;
+		}
 		break;
 
 	case GLUT_KEY_HOME:

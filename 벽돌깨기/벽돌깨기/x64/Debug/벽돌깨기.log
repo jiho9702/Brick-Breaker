@@ -1,32 +1,38 @@
 ﻿  Skipping vcpkg. (no packages)
   소스.cpp
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(160,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(178,74): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(179,74): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(181,82): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(182,82): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(203,19): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(204,19): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(226,30): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(238,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(241,25): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(244,25): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(251,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(254,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(263,80): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(263,46): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(286,13): warning C4244: 'return': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(496,50): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(496,30): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(518,52): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(518,31): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(548,60): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(548,35): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(556,68): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(556,39): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(643,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(646,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(649,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(652,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(760,34): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(163,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(172,29): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(173,29): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(184,74): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(185,74): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(187,82): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(188,82): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(209,18): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(210,18): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(232,30): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(244,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(247,25): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(250,25): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(257,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(260,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(269,80): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(269,46): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(302,26): warning C4305: '-=': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(304,25): warning C4305: '=': 'int'에서 'bool'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(310,34): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(311,34): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(323,13): warning C4244: 'return': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(533,50): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(533,30): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(555,52): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(555,31): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(585,60): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(585,35): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(593,68): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(593,39): warning C4244: '인수': 'float'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(680,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(683,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(686,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(689,27): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\벽돌깨기\소스.cpp(816,34): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
   벽돌깨기.vcxproj -> C:\Users\jiho9\OneDrive\바탕 화면\study\Brick-Breaker\벽돌깨기\x64\Debug\벽돌깨기.exe
