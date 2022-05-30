@@ -6,6 +6,7 @@
 #include <iostream>
 #include <stdio.h>   // Header File For Standard Input/Output
 #include <stdarg.h>
+#include <time.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include <cstdio>
@@ -50,7 +51,7 @@ public:
 	}
 };
 
-Point moving_ball, item, velocity, rectangle[4], bar_point, bottom_point, gameover_point, start_point;
+Point moving_ball, velocity, rectangle[4], bar_point, bottom_point, gameover_point, start_point, item[3];
 
 // 벽돌의 위치를 저장하는 class
 class BRICKS {
@@ -67,7 +68,7 @@ public:
 
 BAR bar;
 
-class BOTTOM{
+class BOTTOM {
 public:
 	Point rectangle[4];
 };
@@ -90,16 +91,16 @@ START_SCREEN start_screen;
 
 //class ITEM {
 //public:
-//	Point item;
+//	Point rectangle[1];
 //};
 //
-//ITEM item[3];
+//ITEM item;
 
 int w, h;
 
 unsigned char* LoadMeshFromFile(const char* texFile)
 {
-	
+
 	GLuint texture;
 	glGenTextures(1, &texture);
 	FILE* fp = NULL;
@@ -141,7 +142,7 @@ void init_gameout()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, bitmap);
-	
+
 	free(bitmap);
 }
 
@@ -153,6 +154,18 @@ void drawBox()
 	glTexCoord2d(1.0, 0.0);      glVertex2d(w, h);
 	glTexCoord2d(1.0, 1.0);      glVertex2d(w, 0);
 	glEnd();
+}
+
+void item_init() {
+	srand(time(NULL));
+
+	int x, y;
+	for (int i = 0; i < 3; i++) {
+		x = rand() % 7;
+		y = rand() % 10;
+		item[i].x = ((block_array[x][y].rectangle[0].x + block_array[x][y].rectangle[3].x) / 2);
+		item[i].y = ((block_array[x][y].rectangle[0].y + block_array[x][y].rectangle[1].y) / 2);
+	}
 }
 
 void init(void) {
@@ -184,13 +197,15 @@ void init(void) {
 	gameover_point.y = height;
 
 	moving_ball_radius = 10.0;
-	moving_ball.x = width/2;
-	moving_ball.y = 500;
+	moving_ball.x = width / 2;
+	moving_ball.y = 590;
 
 	velocity.x = 0.05;
 	velocity.y = 0.05;
 
 	collision_count = 1;
+
+	item_init();
 
 }
 
@@ -220,7 +235,7 @@ void	Modeling_brick() {
 
 	for (int i = 0; i < 7; i++) {
 		if (i == 0) {
-			glColor3i(1.0, 1.0, 0.2);
+			glColor3f(1.0, 1.0, 0.2);
 		}
 		if (i == 1) {
 			glColor3f(1.0, 1, 0.3);
@@ -232,7 +247,7 @@ void	Modeling_brick() {
 			glColor3f(1.0, 1.0, 0.5);
 		}
 		if (i == 4) {
-			
+
 			glColor3f(1.0, 1.0, 0.6);
 		}
 		if (i == 5) {
@@ -250,13 +265,25 @@ void	Modeling_brick() {
 		}
 	}
 	glColor3f(1, 1, 1);
-	
+
+	glEnd();
+
+}
+
+
+void Falling_item() {
+
+	for (int i = 0; i < 3; i++) {
+		Modeling_Circle(10.0, item[i]);
+	}
+
+
 	glEnd();
 
 }
 
 float distance(Point a, Point b) {
-	return sqrt(pow((b.x - a.x),2) + pow((b.y - a.y), 2));
+	return sqrt(pow((b.x - a.x), 2) + pow((b.y - a.y), 2));
 }
 
 void Collision_Detection_Between_Bricks() {
@@ -265,27 +292,27 @@ void Collision_Detection_Between_Bricks() {
 		for (int j = 0; j < 10; j++) {
 			//아래 충돌
 			if (moving_ball.y >= block_array[i][j].rectangle[1].y - moving_ball_radius
-				&& moving_ball.x >= block_array[i][j].rectangle[1].x - moving_ball_radius 
+				&& moving_ball.x >= block_array[i][j].rectangle[1].x - moving_ball_radius
 				&& moving_ball.x <= block_array[i][j].rectangle[2].x + moving_ball_radius
 				&& velocity.y > 0
 				&& distance(Point(moving_ball.x, moving_ball.y), Point(moving_ball.x, block_array[i][j].rectangle[1].y)) < moving_ball_radius) {
-				
+
 				velocity.y *= -1;
 				cout << "아래쪽" << endl;
 				count_++;
 				cout << count_ << endl;
 				for (int k = 0; k < 4; k++) {
-					block_array[i][j].rectangle[k] = Point(0,0);
+					block_array[i][j].rectangle[k] = Point(0, 0);
 				}
 
 			}
 			//위쪽 충돌
 			if (moving_ball.y <= block_array[i][j].rectangle[3].y + moving_ball_radius
-				&& moving_ball_radius + moving_ball.x >= block_array[i][j].rectangle[1].x 
+				&& moving_ball_radius + moving_ball.x >= block_array[i][j].rectangle[1].x
 				&& moving_ball.x - moving_ball_radius <= block_array[i][j].rectangle[2].x
 				&& velocity.y < 0
 				&& distance(Point(moving_ball.x, moving_ball.y), Point(moving_ball.x, block_array[i][j].rectangle[3].y)) < moving_ball_radius) {
-				
+
 				velocity.y *= -1;
 				cout << "위쪽" << endl;
 				count_++;
@@ -296,11 +323,11 @@ void Collision_Detection_Between_Bricks() {
 			}
 			//왼쪽 충돌
 			if (moving_ball.x >= block_array[i][j].rectangle[1].x - moving_ball_radius
-				&& moving_ball_radius + moving_ball.y >= block_array[i][j].rectangle[1].y 
+				&& moving_ball_radius + moving_ball.y >= block_array[i][j].rectangle[1].y
 				&& moving_ball.y - moving_ball_radius <= block_array[i][j].rectangle[3].y
 				&& velocity.x > 0
 				&& distance(Point(moving_ball.x, moving_ball.y), Point(block_array[i][j].rectangle[1].x, moving_ball.y)) < moving_ball_radius) {
-				
+
 				velocity.x *= -1;
 				cout << "왼쪽" << endl;
 				count_++;
@@ -311,11 +338,11 @@ void Collision_Detection_Between_Bricks() {
 			}
 			//오른쪽 충돌
 			if (moving_ball.x <= block_array[i][j].rectangle[2].x + moving_ball_radius
-				&& moving_ball_radius + moving_ball.y >= block_array[i][j].rectangle[1].y 
+				&& moving_ball_radius + moving_ball.y >= block_array[i][j].rectangle[1].y
 				&& moving_ball.y - moving_ball_radius <= block_array[i][j].rectangle[3].y
 				&& velocity.x < 0
 				&& distance(Point(moving_ball.x, moving_ball.y), Point(block_array[i][j].rectangle[2].x, moving_ball.y)) < moving_ball_radius) {
-				
+
 				velocity.x *= -1;
 				cout << "오른쪽" << endl;
 				count_++;
@@ -325,7 +352,7 @@ void Collision_Detection_Between_Bricks() {
 				}
 			}
 			//모서리 충돌(0)
-			if (distance(Point(moving_ball.x, moving_ball.y), Point(block_array[i][j].rectangle[0])) < moving_ball_radius+3) {
+			if (distance(Point(moving_ball.x, moving_ball.y), Point(block_array[i][j].rectangle[0])) < moving_ball_radius + 3) {
 				if (velocity.x > 0 && velocity.y < 0) {
 					cout << "모서리0" << endl;
 					velocity.x *= -1;
@@ -353,7 +380,7 @@ void Collision_Detection_Between_Bricks() {
 				}
 			}
 			//모서리 충돌(1)
-			if (distance(Point(moving_ball.x, moving_ball.y), Point(block_array[i][j].rectangle[1])) < moving_ball_radius+3) {
+			if (distance(Point(moving_ball.x, moving_ball.y), Point(block_array[i][j].rectangle[1])) < moving_ball_radius + 3) {
 				if (velocity.x > 0 && velocity.y > 0) {
 					cout << "모서리01" << endl;
 					velocity.x *= -1;
@@ -381,7 +408,7 @@ void Collision_Detection_Between_Bricks() {
 				}
 			}
 			//모서리 충돌(2)
-			if (distance(Point(moving_ball.x, moving_ball.y), Point(block_array[i][j].rectangle[2]))+2 < moving_ball_radius+3) {
+			if (distance(Point(moving_ball.x, moving_ball.y), Point(block_array[i][j].rectangle[2])) + 2 < moving_ball_radius + 3) {
 				if (velocity.x < 0 && velocity.y > 0) {
 					cout << "모서리02" << endl;
 					velocity.x *= -1;
@@ -409,7 +436,7 @@ void Collision_Detection_Between_Bricks() {
 				}
 			}
 			//모서리 충돌(3)
-			if (distance(Point(moving_ball.x, moving_ball.y), Point(block_array[i][j].rectangle[3]))+2 < moving_ball_radius+3) {
+			if (distance(Point(moving_ball.x, moving_ball.y), Point(block_array[i][j].rectangle[3])) + 2 < moving_ball_radius + 3) {
 				if (velocity.x < 0 && velocity.y < 0) {
 					cout << "모서리03" << endl;
 					velocity.x *= -1;
@@ -444,7 +471,7 @@ void Collision_Detection_to_Walls(void) {
 
 	if (moving_ball.y >= bottom + moving_ball_radius) {
 		velocity.y *= -1;
-		velocity.x = velocity.x;
+
 	}
 	if (moving_ball.y <= bottom + height - moving_ball_radius) {
 		velocity.y = -velocity.y;
@@ -468,7 +495,7 @@ void Modeling_bar() {
 	for (int i = 0; i < 4; i++) {
 		glVertex2i(bar.rectangle[i].x, bar.rectangle[i].y);
 	}
-	
+
 }
 
 void Collision_Detection_Between_bar() {
@@ -515,14 +542,14 @@ void detection_bottom_failed() {
 
 void Modeling_GameOver_Window() {
 	glColor3f(gameover_colorr, gameover_colorg, gameover_colorb);
-	
+
 	glBegin(GL_QUADS);
 	for (int i = 0; i < 4; i++) {
 		glVertex2i(gameover.rectangle[i].x, gameover.rectangle[i].y);
 	}
 }
 
-void Modeling_GameStart_Window(){
+void Modeling_GameStart_Window() {
 
 	glBegin(GL_QUADS);
 	for (int i = 0; i < 4; i++) {
@@ -535,24 +562,17 @@ void Modeling_begin_button() {
 	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_POLYGON);
 	glVertex2i(width / 2, height / 2);
-	glVertex2i(width / 2-50, height / 2-50);
-	glVertex2i(width / 2+50, height / 2-50);
-}
-
-void Falling_item() {
-	//아이템을 만들자!
-
-
-
+	glVertex2i(width / 2 - 50, height / 2 - 50);
+	glVertex2i(width / 2 + 50, height / 2 - 50);
 }
 
 void RenderScene(void) {
 
 	glClearColor(1.0, 1.0, 1.0, 0.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+
 	drawBox();
-	
+
 	if (intro) {
 		glColor3f(1.0, 1, 1);
 		drawBox();
@@ -575,6 +595,9 @@ void RenderScene(void) {
 	void Modeling_begin_button();
 
 	if (start == true) {
+
+		glColor3f(1.0, 1.0, 0.0);
+		Falling_item();
 
 		bott.rectangle[0] = Point(bottom_point.x, bottom_point.y);
 		bott.rectangle[1] = Point(bottom_point.x, bottom_point.y - 50);
@@ -664,7 +687,7 @@ void RenderScene(void) {
 		free(bitmap);
 	}
 	if (restart) {
-		
+
 	}
 
 	glutSwapBuffers();
@@ -675,7 +698,7 @@ void MyKey(int key, int x, int y) {
 
 	switch (key) {
 	case GLUT_KEY_LEFT:
-		if (bar_point.x >= 0 && bar_point.x <= width-100) {
+		if (bar_point.x >= 0 && bar_point.x <= width - 100) {
 			bar_point.x -= 10;
 		}
 		if (bar_point.x <= 0) {
@@ -683,21 +706,24 @@ void MyKey(int key, int x, int y) {
 		}
 		//cout << bar_point.x << endl;
 		break;
+
 	case GLUT_KEY_RIGHT:
-		if (bar_point.x >= 0 && bar_point.x <= width-100) {
+		if (bar_point.x >= 0 && bar_point.x <= width - 100) {
 			bar_point.x += 10;
 		}
 		if (bar_point.x >= width - 100) {
 			bar_point.x -= 10;
 		}
 		break;
+
 	case GLUT_KEY_END:		//goto-introduce
 		intro = true;
-
 		break;
+
 	case GLUT_KEY_PAGE_DOWN: //Pause
 		start = false;
 		break;
+
 	case GLUT_KEY_PAGE_UP:	//restart
 		init();
 		check = false;
@@ -705,7 +731,8 @@ void MyKey(int key, int x, int y) {
 		drawBox();
 		count_ = 0;
 		break;
-	case GLUT_KEY_HOME: 
+
+	case GLUT_KEY_HOME:
 		intro = false;
 		start = true;
 		glColor3f(1.0, 1, 1);
