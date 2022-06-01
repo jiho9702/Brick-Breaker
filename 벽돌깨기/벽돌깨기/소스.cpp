@@ -60,7 +60,7 @@ public:
 	Point rectangle[4];
 };
 
-BRICKS block_array[7][10]; // 가로 10개씩 7줄
+BRICKS block_array[5][5]; // 가로 5개씩 5줄
 
 class BAR {
 public:
@@ -164,8 +164,8 @@ void item_init() {
 
 	int x, y;
 	for (int i = 0; i < 3; i++) {
-		x = rand() % 7;
-		y = rand() % 10;
+		x = rand() % 5;
+		y = rand() % 5;
 		item.item[i].x = ((block_array[x][y].rectangle[0].x + block_array[x][y].rectangle[3].x) / 2);
 		item.item[i].y = ((block_array[x][y].rectangle[0].y + block_array[x][y].rectangle[1].y) / 2);
 
@@ -179,17 +179,17 @@ void init(void) {
 	int start_x = 5;
 	int start_y = 595;
 
-	for (int i = 0; i < 7; i++) {
-		for (int j = 0; j < 10; j++) {
+	for (int i = 0; i < 5; i++) {
+		start_x = 30;
+		for (int j = 0; j < 5; j++) {
 			block_array[i][j].rectangle[0].x = block_array[i][j].rectangle[1].x = start_x;
 			block_array[i][j].rectangle[0].y = block_array[i][j].rectangle[3].y = start_y;
 
 			block_array[i][j].rectangle[2].x = block_array[i][j].rectangle[3].x = start_x + 40;
 			block_array[i][j].rectangle[1].y = block_array[i][j].rectangle[2].y = start_y - 30;
 
-			start_x += 50;
+			start_x += 100;
 		}
-		start_x = 5;
 		start_y -= 40;
 	}
 
@@ -210,9 +210,15 @@ void init(void) {
 	
 	if (rand() % 2 == 0) {
 		velocity.x = (rand() % 9 + 1) * 0.01 * -1;
+		if (velocity.x > -0.06) {
+			velocity.x = 0.06;
+		}
 	}
 	else {
 		velocity.x = (rand() % 9 + 1) * 0.01;
+		if (velocity.x > 0.06) {
+			velocity.x = 0.06;
+		}
 	}
 
 	cout << velocity.x << endl;
@@ -248,7 +254,7 @@ void	Modeling_Circle(float radius, Point CC) {
 
 void	Modeling_brick() {
 
-	for (int i = 0; i < 7; i++) {
+	for (int i = 0; i < 5; i++) {
 		if (i == 0) {
 			glColor3f(1.0, 1.0, 0.2);
 		}
@@ -272,7 +278,7 @@ void	Modeling_brick() {
 			glColor3f(1.0, 1.0, 1);
 		}
 
-		for (int j = 0; j < 10; j++) {
+		for (int j = 0; j < 5; j++) {
 			for (int k = 0; k < 4; k++) {
 				glBegin(GL_QUADS);
 				glVertex2i(block_array[i][j].rectangle[k].x, block_array[i][j].rectangle[k].y);
@@ -335,8 +341,8 @@ float distance(Point a, Point b) {
 
 void Collision_Detection_Between_Bricks() {
 
-	for (int i = 0; i < 7; i++) {
-		for (int j = 0; j < 10; j++) {
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
 			//아래 충돌
 			if (moving_ball.y >= block_array[i][j].rectangle[1].y - moving_ball_radius
 				&& moving_ball.x >= block_array[i][j].rectangle[1].x - moving_ball_radius
@@ -561,7 +567,6 @@ void Collision_Detection_Between_bar() {
 			cout << "모서리0" << endl;
 			velocity.x *= -1;
 			velocity.y *= -1;
-			count_++;
 			for (int k = 0; k < 4; k++) {
 				bar.rectangle[k] = Point(0, 0);
 			}
@@ -569,7 +574,6 @@ void Collision_Detection_Between_bar() {
 		if (velocity.x < 0 && velocity.y < 0) {
 			cout << "모서리0" << endl;
 			velocity.y *= -1;
-			count_++;
 			for (int k = 0; k < 4; k++) {
 				bar.rectangle[k] = Point(0, 0);
 			}
@@ -577,7 +581,6 @@ void Collision_Detection_Between_bar() {
 		if (velocity.x > 0 && velocity.y > 0) {
 			cout << "모서리0" << endl;
 			velocity.x *= -1;
-			count_++;
 			for (int k = 0; k < 4; k++) {
 				bar.rectangle[k] = Point(0, 0);
 			}
@@ -589,7 +592,6 @@ void Collision_Detection_Between_bar() {
 			cout << "모서리03" << endl;
 			velocity.x *= -1;
 			velocity.y *= -1;
-			count_++;
 			for (int k = 0; k < 4; k++) {
 				bar.rectangle[k] = Point(0, 0);
 			}
@@ -597,7 +599,6 @@ void Collision_Detection_Between_bar() {
 		if (velocity.x > 0 && velocity.y < 0) {
 			cout << "모서리03" << endl;
 			velocity.y *= -1;
-			count_++;
 			for (int k = 0; k < 4; k++) {
 				bar.rectangle[k] = Point(0, 0);
 			}
@@ -605,7 +606,6 @@ void Collision_Detection_Between_bar() {
 		if (velocity.x < 0 && velocity.y > 0) {
 			cout << "모서리03" << endl;
 			velocity.x *= -1;
-			count_++;
 			for (int k = 0; k < 4; k++) {
 				bar.rectangle[k] = Point(0, 0);
 			}
@@ -742,20 +742,22 @@ void RenderScene(void) {
 		gameover.rectangle[2] = Point(gameover_point.x + width, gameover_point.y - height);
 		gameover.rectangle[3] = Point(gameover_point.x + width, gameover_point.y);
 
-		if (count_ >= 10) {
+		if (count_ >= 6) {
 			glColor3f(0.8, 0.8, 0.8);
 		}
-		if (count_ >= 20) {
+		if (count_ >= 11) {
 			glColor3f(0.6, 0.6, 0.6);
 		}
-		if (count_ >= 35) {
+		if (count_ >= 17) {
 			glColor3f(0.4, 0.4, 0.4);
 		}
-		if (count_ >= 50) {
+		if (count_ >= 25) {
 			glColor3f(0.2, 0.2, 0.2);
+			moving_ball.x = 1000;
+			moving_ball.y = 1000;
 		}
 
-		if (count_ == 70 && item_count == 3) {
+		if (count_ == 25 && item_count == 3) {
 			glColor3f(1.0, 1, 1);
 			drawBox();
 			GLuint texID;
@@ -823,7 +825,6 @@ void MyKey(int key, int x, int y) {
 		if (bar_point.x <= 0) {
 			bar_point.x += 20;
 		}
-		//cout << bar_point.x << endl;
 		break;
 
 	case GLUT_KEY_RIGHT:
