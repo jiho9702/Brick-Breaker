@@ -204,10 +204,19 @@ void init(void) {
 
 	moving_ball_radius = 10.0;
 	moving_ball.x = width / 2;
-	moving_ball.y = 590;
+	moving_ball.y = 100;
 
-	velocity.x = 0.1;
-	velocity.y = 0.1;
+	srand(time(NULL));
+	
+	if (rand() % 2 == 0) {
+		velocity.x = (rand() % 9 + 1) * 0.01 * -1;
+	}
+	else {
+		velocity.x = (rand() % 9 + 1) * 0.01;
+	}
+
+	cout << velocity.x << endl;
+	velocity.y = 0.05;
 
 	collision_count = 1;
 
@@ -286,6 +295,7 @@ void item_gotcha() {
 				item.item[i].y = -100;
 
 				item_count++;
+				cout << "item_count" << item_count << endl;
 		}
 	}
 }
@@ -546,6 +556,62 @@ void Collision_Detection_Between_bar() {
 		velocity.y *= -1;
 	}
 
+	if (distance(Point(moving_ball.x, moving_ball.y), Point(bar.rectangle[0])) < moving_ball_radius + 3) {
+		if (velocity.x > 0 && velocity.y < 0) {
+			cout << "모서리0" << endl;
+			velocity.x *= -1;
+			velocity.y *= -1;
+			count_++;
+			for (int k = 0; k < 4; k++) {
+				bar.rectangle[k] = Point(0, 0);
+			}
+		}
+		if (velocity.x < 0 && velocity.y < 0) {
+			cout << "모서리0" << endl;
+			velocity.y *= -1;
+			count_++;
+			for (int k = 0; k < 4; k++) {
+				bar.rectangle[k] = Point(0, 0);
+			}
+		}
+		if (velocity.x > 0 && velocity.y > 0) {
+			cout << "모서리0" << endl;
+			velocity.x *= -1;
+			count_++;
+			for (int k = 0; k < 4; k++) {
+				bar.rectangle[k] = Point(0, 0);
+			}
+		}
+	}
+
+	if (distance(Point(moving_ball.x, moving_ball.y), Point(bar.rectangle[3])) + 2 < moving_ball_radius + 3) {
+		if (velocity.x < 0 && velocity.y < 0) {
+			cout << "모서리03" << endl;
+			velocity.x *= -1;
+			velocity.y *= -1;
+			count_++;
+			for (int k = 0; k < 4; k++) {
+				bar.rectangle[k] = Point(0, 0);
+			}
+		}
+		if (velocity.x > 0 && velocity.y < 0) {
+			cout << "모서리03" << endl;
+			velocity.y *= -1;
+			count_++;
+			for (int k = 0; k < 4; k++) {
+				bar.rectangle[k] = Point(0, 0);
+			}
+		}
+		if (velocity.x < 0 && velocity.y > 0) {
+			cout << "모서리03" << endl;
+			velocity.x *= -1;
+			count_++;
+			for (int k = 0; k < 4; k++) {
+				bar.rectangle[k] = Point(0, 0);
+			}
+		}
+	}
+
 }
 
 void Modeling_bottom_range() {
@@ -661,7 +727,7 @@ void RenderScene(void) {
 
 		Collision_Detection_Between_bar();
 
-		//detection_bottom_failed();
+		detection_bottom_failed();
 
 		// 움직이는 공의 위치 변화 
 		moving_ball.x += velocity.x;
@@ -689,7 +755,7 @@ void RenderScene(void) {
 			glColor3f(0.2, 0.2, 0.2);
 		}
 
-		if (count_ == 70) {
+		if (count_ == 70 && item_count == 3) {
 			glColor3f(1.0, 1, 1);
 			drawBox();
 			GLuint texID;
@@ -752,23 +818,42 @@ void MyKey(int key, int x, int y) {
 	switch (key) {
 	case GLUT_KEY_LEFT:
 		if (bar_point.x >= 0 && bar_point.x <= width - 100) {
-			bar_point.x -= 10;
+			bar_point.x -= 20;
 		}
 		if (bar_point.x <= 0) {
-			bar_point.x += 10;
+			bar_point.x += 20;
 		}
 		//cout << bar_point.x << endl;
 		break;
 
 	case GLUT_KEY_RIGHT:
 		if (bar_point.x >= 0 && bar_point.x <= width - 100) {
-			bar_point.x += 10;
+			bar_point.x += 20;
 		}
 		if (bar_point.x >= width - 100) {
-			bar_point.x -= 10;
+			bar_point.x -= 20;
 		}
 		break;
-
+	case GLUT_KEY_UP:
+		if (velocity.y > 0) {
+			velocity.x += 0.01;
+			velocity.y += 0.01;
+		}
+		else if (velocity.y < 0) {
+			velocity.x -= 0.01;
+			velocity.y -= 0.01;
+		}
+		break;
+	case GLUT_KEY_DOWN:
+		if (velocity.y > 0) {
+			velocity.x -= 0.01;
+			velocity.y -= 0.01;
+		}
+		else if(velocity.y < 0) {
+			velocity.x += 0.01;
+			velocity.y += 0.01;
+		}
+		break;
 	case GLUT_KEY_END:		//goto-introduce
 		intro = true;
 		break;
