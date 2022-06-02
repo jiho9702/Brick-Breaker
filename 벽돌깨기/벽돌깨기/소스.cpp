@@ -196,8 +196,8 @@ void init(void) {
 	bottom_point.x = 0;
 	bottom_point.y = 5;
 
-	bar_point.x = 200;
-	bar_point.y = 40;
+	bar_point.x = 150;
+	bar_point.y = 20;
 
 	gameover_point.x = 0;
 	gameover_point.y = height;
@@ -208,7 +208,7 @@ void init(void) {
 
 	srand(time(NULL));
 	
-	if (rand() % 2 == 0) {
+	/*if (rand() % 2 == 0) {
 		velocity.x = (rand() % 9 + 1) * 0.01 * -1;
 		if (velocity.x > -0.06) {
 			velocity.x = 0.06;
@@ -219,9 +219,10 @@ void init(void) {
 		if (velocity.x > 0.06) {
 			velocity.x = 0.06;
 		}
-	}
+	}*/
 
 	cout << velocity.x << endl;
+	velocity.x = -0.07;
 	velocity.y = 0.05;
 
 	collision_count = 1;
@@ -245,6 +246,18 @@ void	Modeling_Circle(float radius, Point CC) {
 	float	delta;
 
 	delta = 2 * PI / polygon_num;
+	glBegin(GL_POLYGON);
+
+	for (int i = 0; i < polygon_num; i++)
+		glVertex2f(CC.x + radius * cos(delta * i), CC.y + radius * sin(delta * i));
+	glEnd();
+}
+
+void	Modeling_Circle_ball(float radius, Point CC) {
+	float	delta;
+
+	delta = 2 * PI / polygon_num;
+	glColor3f(0, 0, 1);
 	glBegin(GL_POLYGON);
 
 	for (int i = 0; i < polygon_num; i++)
@@ -301,7 +314,7 @@ void item_gotcha() {
 				item.item[i].y = -100;
 
 				item_count++;
-				cout << "item_count" << item_count << endl;
+				cout << "item_count : " << item_count << endl;
 		}
 	}
 }
@@ -544,7 +557,8 @@ void Collision_Detection_to_Walls(void) {
 void Modeling_bar() {
 
 	glBegin(GL_QUADS);
-	glColor3f(0.0, 1.0, 1.0);
+	glColor3f(0.0, 0.0, 1.0);
+	//glColor3f(0.0, 1.0, 1.0);
 	for (int i = 0; i < 4; i++) {
 		glVertex2i(bar.rectangle[i].x, bar.rectangle[i].y);
 	}
@@ -711,12 +725,13 @@ void RenderScene(void) {
 
 
 		glColor3f(1.0, 1.0, 1.0);
+
 		Modeling_bar();
 
 		bar.rectangle[0] = Point(bar_point.x, bar_point.y);
-		bar.rectangle[1] = Point(bar_point.x, bar_point.y - 30);
-		bar.rectangle[2] = Point(bar_point.x + 100, bar_point.y - 30);
-		bar.rectangle[3] = Point(bar_point.x + 100, bar_point.y);
+		bar.rectangle[1] = Point(bar_point.x, bar_point.y - 10);
+		bar.rectangle[2] = Point(bar_point.x + 200, bar_point.y - 10);
+		bar.rectangle[3] = Point(bar_point.x + 200, bar_point.y);
 		Modeling_brick();
 
 		Collision_Detection_Between_Bricks();
@@ -734,13 +749,14 @@ void RenderScene(void) {
 		moving_ball.y += velocity.y;
 
 		// 움직이는 공 그리기 
-		glColor3f(1.0, 1.0, 1.0);
-		Modeling_Circle(moving_ball_radius, moving_ball);
+		Modeling_Circle_ball(moving_ball_radius, moving_ball);
 
 		gameover.rectangle[0] = Point(gameover_point.x, gameover_point.y);
 		gameover.rectangle[1] = Point(gameover_point.x, gameover_point.y - height);
 		gameover.rectangle[2] = Point(gameover_point.x + width, gameover_point.y - height);
 		gameover.rectangle[3] = Point(gameover_point.x + width, gameover_point.y);
+
+		glColor3f(1, 1, 1);
 
 		if (count_ >= 6) {
 			glColor3f(0.8, 0.8, 0.8);
@@ -756,14 +772,34 @@ void RenderScene(void) {
 			moving_ball.x = 1000;
 			moving_ball.y = 1000;
 		}
+	}
 
-		if (count_ == 25 && item_count == 3) {
+	//glColor3f(1.0, 1, 1);
+
+	if (count_ == 25 && item_count == 3) {
+		glColor3f(1.0, 1, 1);
+		glClearColor(1.0, 1.0, 1.0, 0.0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		drawBox();
+		GLuint texID;
+
+		unsigned char* bitmap;
+		bitmap = LoadMeshFromFile((char*)"gameover1.png");
+		glEnable(GL_TEXTURE_2D);
+		glGenTextures(1, &texID);
+		glBindTexture(GL_TEXTURE_2D, texID);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, bitmap);
+
+		free(bitmap);
+		if (item_count != 3) {
 			glColor3f(1.0, 1, 1);
 			drawBox();
 			GLuint texID;
 
 			unsigned char* bitmap;
-			bitmap = LoadMeshFromFile((char*)"gameover1.png");
+			bitmap = LoadMeshFromFile((char*)"gameover_failed.png");
 			glEnable(GL_TEXTURE_2D);
 			glGenTextures(1, &texID);
 			glBindTexture(GL_TEXTURE_2D, texID);
@@ -772,27 +808,15 @@ void RenderScene(void) {
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, bitmap);
 
 			free(bitmap);
-			if (item_count != 3) {
-				glColor3f(1.0, 1, 1);
-				drawBox();
-				GLuint texID;
-
-				unsigned char* bitmap;
-				bitmap = LoadMeshFromFile((char*)"gameover_failed.png");
-				glEnable(GL_TEXTURE_2D);
-				glGenTextures(1, &texID);
-				glBindTexture(GL_TEXTURE_2D, texID);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, bitmap);
-
-				free(bitmap);
-			}
 		}
-
 	}
+
+	//glColor3f(1.0, 1, 1);
+
 	if (check) {
-		glColor3f(1.0, 1, 1);
+		//glColor3f(1.0, 1, 1);
+		glClearColor(1.0, 1.0, 1.0, 0.0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		drawBox();
 		GLuint texID;
 
